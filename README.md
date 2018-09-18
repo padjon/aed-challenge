@@ -4,7 +4,7 @@
 
 * src/app/views/simulation/*
 * src/app/data/models/map-entity.ts
-* src/app/data/models/map-entity.service.yts
+* src/app/data/models/map-entity.service.ts
 
 ## Setup
 
