@@ -1,0 +1,379 @@
+// Here you can add other styles
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/bootstrap.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+@import 'vendors/toastr/toastr.scss';
+@import 'vendors/bs-datepicker/bs-datepicker.scss';
+
+main {
+    position:relative;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.brand-minimized .app-header.navbar .navbar-brand {
+    background-size: 54px !important
+}
+
+header.app-header.navbar{
+    .navbar-brand{
+        @media screen and (max-width: 991px){
+            display: none !important;
+        }
+    }
+
+    ul.nav.navbar-nav{
+        @media screen and (max-width: 850px){
+            width: calc(100% - 51px);
+            max-width: 400px;
+        }
+
+        @media screen and (min-width: 851px){
+            //width: 400px;
+        }
+
+        #control-center-list-item{
+            min-width: 150px;
+        }
+    }
+
+    #main-heading{
+        @media screen and (max-width: 700px){
+            display: none;
+        }
+    }
+
+    #production-mode{
+        @media screen and (max-width: 850px){
+            display: none;
+        }
+    }
+}
+
+.page-login{
+    min-height: 100%;
+    background: url('/assets/img/background/1453026622.png') no-repeat center center fixed;
+    background-size: cover;
+    position:absolute;
+    top:0px;
+    bottom:0px;
+    left: 0px;
+    right: 0px;
+}
+
+.theme-green .bs-datepicker-head {
+    background-color: $primary !important;
+}
+
+.card-content {
+    padding: 30px 0px;
+}
+
+.fullsize-content > .card:last-child {
+    margin-bottom: 0px;
+}
+
+.fullsize-content {
+
+    position: absolute;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    left: 0px;
+
+    .ngx-datatable.bootstrap {
+        margin-left:-20px;
+        margin-right:-20px;
+        .datatable-body {
+            padding-bottom:20px;
+        }
+
+        .datatable-header-cell {
+            font-weight: bold;
+        }
+
+        .datatable-body-cell {
+            padding: 0.75em;
+        }
+
+        .datatable-body-row {
+            padding: 0px;
+        }
+
+        .datatable-body-row.datatable-row-even {
+            background-color: rgba(0,0,0,0.03);
+        }
+
+        .datatable-footer{
+            color:#333;
+            background-color:#fff;
+            .datatable-pager .active a, .datatable-pager li:hover a{
+                color: #fff;
+            }
+
+            .datatable-pager .disabled a, .datatable-pager li.disabled:hover a {
+                color: #ccc;
+            }
+
+            .datatable-pager a {
+                color: #333;
+            }
+        }
+    }
+}
+
+.btn-140 {
+    width:140px;
+}
+
+.height-100p{
+    height:100%;
+}
+
+.table-hover tr:hover{
+    cursor: pointer;
+}
+
+.card-list-entry {
+    padding:10px 20px;
+}
+
+.card-list-entry.no-hover:hover {
+    background-color: #fff !important;
+}
+
+.card-list-entry:hover {
+    background-color:#efefef;
+}
+.card-list-entry:hover a.nav-link:hover {
+    background-color:#fff;
+}
+
+.card-list-entry+.card-list-entry {
+    border-top:1px solid rgb(227, 232, 236);
+}
+
+.card-list-entry a.black-text{
+    color:#000;
+    text-decoration: none;
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+.ps-prop-label, .ps-prop-label-headline
+{
+    color:#aaa;
+    font-size:12px;
+    padding-top:10px;
+    font-weight:400 !important;
+}
+
+.ps-prop-label-headline {
+    padding-bottom: 10px !important;
+}
+
+.app-footer {
+    color: rgb(119,119,119);
+    font-size: 11px;
+    a {
+        color: rgb(119,119,119);
+    }
+}
+
+.sidebar {
+    position: fixed !important;
+    top:60px;
+    bottom:0px;
+    z-index:1021;
+}
+
+main, footer {
+    margin-left:0px;
+    //margin-left:50px;
+}
+
+.box-center {
+    position:absolute;
+    width: 480px;
+    margin-left: -240px;
+    left:50%;
+    right: 50%;
+    bottom:50%;
+    top:50%;
+    text-align:center;
+}
+
+.row.text-middle > div{
+    margin: auto auto;
+}
+
+.col-md-4.filter{
+    padding-top: 6px;
+    text-align: right;
+    padding-right: 15px;
+
+    label{
+        margin-top: 2px;
+    }
+}
+.marker-text{
+    tr>td {
+        padding-right: 14px;
+    }
+
+    td {
+        vertical-align: top;
+    }
+
+    tr:nth-child(2) td {
+        padding-bottom: 6px;
+        padding-top: 6px;
+    }
+
+    tr:last-child td {
+        padding-bottom: 0px !important;
+    }
+}
+
+#active-emergencies-list{
+    overflow: hidden;
+
+    .card-list-entry{
+        min-height: 63px;
+    }
+}
+
+#createEmergency{
+    .form-group{
+        margin-bottom: 4px;
+
+        label{
+            font-size: 11px;
+            color: #aaa;
+            margin-bottom: 3px;
+
+            &.required{
+                &:after{
+                    content: "*";
+                }
+            }
+
+            &.has-error{
+                color: $red;
+                font-weight: 700;
+            }
+        }
+
+        .autocomplete{
+            border-left: solid 1px #e3e8ec;
+            border-right: solid 1px #e3e8ec;
+
+            .suggestion{
+                padding: 5px 12px;
+                border-bottom: 1px solid #e3e8ec;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                cursor: pointer;
+
+                &:hover{
+                    background-color:#efefef;
+                }
+            }
+        }
+    }
+}
+
+.nav-tabs {
+    overflow-x: auto;
+   overflow-y: hidden;
+   display: -webkit-box;
+   display: -moz-box;
+ }
+.nav-tabs>li {
+     float:none;
+}
+
+.sidebar-minimized .special-badge {
+    display:block !important;
+    position:absolute;
+    left:25px;
+    bottom: 8px;
+    font-size:10px;
+}
+
+
+.checkUncontactedFR {
+  background-color: #0e6498;
+}
+
+.cancelMission {
+  border-bottom: 2px solid #f86c6b !important;
+}
+
+.successMission {
+  border-bottom: 2px solid #4dbd74 !important;
+}
+
+.invalidField {
+  border: 2px solid #f86c6b;
+}
+
+.invalidSwitchField {
+  background-color: #f86c6b !important;
+}
+
+// Custom drawing manager buttons
+div#createEmergency{
+    overflow: hidden;
+
+    .gmnoprint{
+        & > div{
+            div[role="button"] > span > div{
+                width: 25px !important;
+                height: 25px !important;
+
+                img{
+                    display: none;
+                }
+            }
+            // hand button
+            &:nth-of-type(1){
+                div[role="button"] > span > div {
+                    background-image: url('/assets/img/icons/hand.png');
+                    background-position: center;
+                    background-size: contain;
+                }
+            }
+            // circle button
+            &:nth-of-type(2){
+                div[role="button"] > span > div {
+                    background-image: url('/assets/img/icons/circle.png');
+                    background-position: center;
+                    background-size: contain;
+                }
+            }
+        }
+    }
+}
+
+//ngx-input-file fix for not existing icons
+.fas {
+    display: none;
+}
+
+.file-caption-main .btn-secondary {
+    display: none;
+}
+
+.noSpinners tr:first-child {
+    display:none;
+}
+
+.noSpinners tr:last-child {
+    display:none;
+}

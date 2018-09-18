@@ -1,0 +1,175 @@
+<div class="animated fadeIn fullsize-content" id="active-emergencies-list">
+    <div class="row no-gutters height-100p">
+        <div class="col-md-8" style="height:100%;">
+
+            <div style="position:absolute; z-index: 1; left:0px; right: 0px; bottom: 0px; top:0px; opacity: 0.5">
+                <!--<svg width="100%" height="100%">
+                    <defs>
+                        <mask id="hole">
+                            <rect width="100%" height="1092" fill="white" />
+                            <circle r="450" cx="50%" cy="546" fill="black" />
+                        </mask>
+                    </defs>
+
+                    <circle r="450" cx="50%" cy="50%" fill="transparent" stroke="#999" stroke-width="1" />
+                    <rect id="donut" width="100%" height="100%" fill="black" mask="url(#hole)" />
+
+                </svg>-->
+            </div>
+            <agm-map [latitude]="(emergency) ? emergency.latitude : 54.310233" [longitude]="(emergency) ? emergency.longitude : 10.1294523"
+                [zoom]="16" class="height-100p" [fitBounds]="bounds">
+
+                <agm-marker *ngFor="let stationary of getMarkers(MapEntityType.STATIONARY)" [latitude]="stationary.latitude"
+                    [longitude]="stationary.longitude" [iconUrl]="'assets/img/markers/aed.png'"></agm-marker>
+
+
+                <agm-marker *ngFor="let emergency of getMarkers(MapEntityType.EMERGENCY)" [latitude]="emergency.latitude"
+                    [longitude]="emergency.longitude" [iconUrl]="'assets/img/markers/alarm.png'"></agm-marker>
+                <agm-marker *ngFor="let mobile of getMarkers(MapEntityType.MOBILE);" [latitude]="mobile.latitude"
+                    [longitude]="mobile.longitude" [iconUrl]="'assets/img/markers/taxi.png'"></agm-marker>
+
+                <agm-marker *ngFor="let ambulance of getMarkers(MapEntityType.AMBULANCE)" [latitude]="ambulance.latitude"
+                    [longitude]="ambulance.longitude" [iconUrl]="'assets/img/markers/ambulance.png'"></agm-marker>
+                <agm-marker *ngFor="let bystander of getMarkers(MapEntityType.BYSTANDER)" [latitude]="bystander.latitude"
+                    [longitude]="bystander.longitude" [iconUrl]="'assets/img/markers/bystander.png'"></agm-marker>
+                <agm-marker *ngFor="let drone of getMarkers(MapEntityType.DRONE)" [latitude]="drone.latitude"
+                    [longitude]="drone.longitude" [iconUrl]="'assets/img/markers/drone.png'"></agm-marker>
+                <agm-marker *ngFor="let firstresponder of getMarkers(MapEntityType.FIRSTRESPONDER)" [latitude]="firstresponder.latitude"
+                    [longitude]="firstresponder.longitude" [iconUrl]="'assets/img/markers/fr.png'"></agm-marker>
+
+                <agm-polyline *ngFor="let route of routes" [strokeColor]="route.color" [strokeWeight]="2" [geodesic]="true">
+                    <agm-polyline-point *ngFor="let point of route.overview_path" [latitude]="point.lat()" [longitude]="point.lng()"></agm-polyline-point>
+                </agm-polyline>
+            </agm-map>
+        </div>
+        <div class="col-md-4" style="background:white; height:100%">
+            <div class="card card-accent-primary" style="height:100%">
+                <div style="overflow:auto; height:100%">
+                    <div class="card" style="margin-bottom:0px;">
+                        <div class="card-header">
+                            <i class="fa fa-cog"></i> Options
+                            <button type="button" class="btn btn-primary pull-right btn-sm" (click)="startSimulation()">
+                                New Simulation</button>
+                            <button type="button" class="btn btn-default btn-sm pull-right" (click)="startEmergency()">
+                                {{newEmergencyButtonText}}</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <b>Simulation Speed</b>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top:10px">
+                                <div class="col-md-12">
+                                    <ng5-slider [(value)]="configuration.speed" [options]="{floor: 1, ceil: 20}"></ng5-slider>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top:20px">
+                                <div class="col-md-12">
+                                    <b>Filters</b>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top:20px">
+                                <div class="col-md-6">
+                                    <label class="switch switch-3d switch-primary" id="userbasedDataRemoved">
+                                        <input type="checkbox" class="switch-input" [(ngModel)]="configuration.filters[MapEntityType.BYSTANDER]" />
+                                        <span class="switch-label"></span>
+                                        <span class="switch-handle"></span>
+                                    </label>
+                                    &nbsp; Stationary AEDs
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="switch switch-3d switch-primary" id="userbasedDataRemoved">
+                                        <input type="checkbox" class="switch-input" [(ngModel)]="configuration.filters[MapEntityType.AMBULANCE]" />
+                                        <span class="switch-label"></span>
+                                        <span class="switch-handle"></span>
+                                    </label>
+                                    &nbsp; Ambulance
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="switch switch-3d switch-primary" id="userbasedDataRemoved">
+                                        <input type="checkbox" class="switch-input" [(ngModel)]="configuration.filters[MapEntityType.MOBILE]" />
+                                        <span class="switch-label"></span>
+                                        <span class="switch-handle"></span>
+                                    </label>
+                                    &nbsp; Taxies
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="switch switch-3d switch-primary" id="userbasedDataRemoved">
+                                        <input type="checkbox" class="switch-input" [(ngModel)]="configuration.filters[MapEntityType.FIRSTRESPONDER]" />
+                                        <span class="switch-label"></span>
+                                        <span class="switch-handle"></span>
+                                    </label>
+                                    &nbsp; Firstresponders
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="switch switch-3d switch-primary" id="userbasedDataRemoved">
+                                        <input type="checkbox" class="switch-input" [(ngModel)]="configuration.filters[MapEntityType.DRONE]" />
+                                        <span class="switch-label"></span>
+                                        <span class="switch-handle"></span>
+                                    </label>
+                                    &nbsp; Drones
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-top:20px">
+                                <div class="col-md-12" style="padding-bottom:10px;">
+                                    <b>Density</b>
+                                </div>
+                                <!--<div class="col-md-6">
+                                            Stationary AEDs
+                                            <ng5-slider [(value)]="configuration.density[MapEntityType.STATIONARY]"
+                                                [options]="{floor: 0,ceil: 200}"></ng5-slider>
+                                        </div>-->
+                                <div class="col-md-6">
+                                    Taxies / km²
+                                    <ng5-slider [(value)]="configuration.density[MapEntityType.MOBILE]" [options]="{floor: 1,ceil: 5}"></ng5-slider>
+                                </div>
+                                <div class="col-md-6">
+                                    Firstresponders / km²
+                                    <ng5-slider [(value)]="configuration.density[MapEntityType.FIRSTRESPONDER]"
+                                        [options]="{floor: 5,ceil: 50}"></ng5-slider>
+                                </div>
+                                <!--<div class="col-md-6">
+                                            Drones
+                                            <ng5-slider [(value)]="configuration.density[MapEntityType.DRONE]"
+                                                [options]="{floor: 0,ceil: 200}"></ng5-slider>
+                                        </div>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" style="min-height:500px">
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i> Simulation results
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Survival Rate</th>
+                                        <th>AED by</th>
+                                        <th>AED after</th>
+                                        <th>CPR by</th>
+                                        <th>CPR after</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let result of results; let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{result.srate}}%</td>
+                                        <td>{{result.aedBy}}</td>
+                                        <td>{{result.aedTime}} min</td>
+                                        <td>{{result.cprBy}}</td>
+                                        <td>{{result.cprTime}} min</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
